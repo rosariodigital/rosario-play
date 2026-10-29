@@ -21,11 +21,19 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Configuración segura de pantalla completa nativa
+        // Pantalla completa sin bordes ni barra superior
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         webView = new WebView(this);
         setContentView(webView);
@@ -48,10 +56,11 @@ public class MainActivity extends Activity {
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient());
 
-        webView.loadUrl("https://rosariodigital.github.io/rosario-app/");
+        // Dirección exacta confirmada de tu repositorio
+        webView.loadUrl("https://rosariodigital.github.io/descargas/");
     }
 
-    // Manejo seguro del botón Volver sin crasheos en versiones nuevas
+    // Navegación hacia atrás sin cierres inesperados
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView != null && webView.canGoBack()) {
